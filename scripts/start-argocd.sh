@@ -3,7 +3,7 @@
 # Running for the first time
 #helm repo add argo-cd https://argoproj.github.io/argo-helm
 
-#minikube start --memory 20000 --cpus=6 --driver=kvm2 --addons ingress
+minikube start --memory 20000 --cpus=6 --driver=kvm2 --addons ingress
 
 sudo ./hosts_remover.sh /etc/hosts
 sudo ./hosts_populator.sh /etc/hosts $(minikube ip)
@@ -15,13 +15,13 @@ helm upgrade --install argocd ../helm/argo-cd --values ../helm/argocd-values.yml
 
 sleep 10
 
-kubectl apply -f ../applications
+kubectl apply -f ../applications/infra
 
 ./seed_vault.sh vault.osber.io
 ./seed_kibana.sh kibana.osber.io create_data_view-k8s-1.json
 ./seed_kibana.sh kibana.osber.io create_data_view-k8s-2.json
 
-#sleep 50
+kubectl apply -f ../applications/services
 
 echo "ArgoCD password: $(kubectl -n loans get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)"
 
