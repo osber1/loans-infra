@@ -1,0 +1,11 @@
+nameOverride: postgres
+
+ingress:
+  enabled: true
+  hostname: kibana.osber.io
+
+elasticsearch:
+  hosts:
+    - http://elasticsearch.loans.svc.cluster.local
+    - elasticsearch
+  port: 9200

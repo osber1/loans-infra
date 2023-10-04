@@ -1,0 +1,30 @@
+nameOverride: grafana
+
+admin:
+  password: admin
+
+ingress:
+  enabled: true
+  hostname: grafana.osber.io
+
+dashboardsProvider:
+  enabled: true
+  configMapName: grafana-dashboard-providers
+
+dashboardsConfigMaps:
+  - configMapName: grafana-dashboard
+    folderName: Services
+    fileName: spring-boot.json
+  - configMapName: grafana-dashboard-1
+    folderName: Services
+    fileName: jvm-micrometer.json
+
+datasources:
+  secretDefinition:
+    apiVersion: 1
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        url: http://prometheus-server.loans:80
+        isDefault: true
+        uid: veryuniqueuid

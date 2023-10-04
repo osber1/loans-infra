@@ -1,0 +1,11 @@
+nameOverride: postgres
+fullnameOverride: postgres
+
+auth:
+  password: root
+  username: root
+
+primary:
+  extraEnvVars:
+    - name: POSTGRES_DB
+      value: loans

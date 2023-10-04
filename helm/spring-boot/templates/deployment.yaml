@@ -1,0 +1,62 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "microservice.name" . }}
+  labels:
+    app: {{ include "microservice.name" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "microservice.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "microservice.name" . }}
+    spec:
+      containers:
+        - name: {{ include "microservice.name" . }}
+          image: {{ include "microservice.image" . }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: service-port
+              containerPort: {{ .Values.service.port }}
+          env:
+            - name: "SPRING_PROFILES_ACTIVE"
+              value: "k8s"
+        {{- range $key, $value := .Values.env }}
+            - name: {{ $key | quote }}
+              value: {{ $value | quote }}
+        {{- end }}
+        {{- with .Values.secretEnv }}
+        {{- range $key, $value := . }}
+        {{- range $env := $value }}
+            - name: {{ $env }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $key }}
+                  key: {{ $env }}
+        {{- end }}
+        {{- end }}
+        {{- end }}
+          startupProbe:
+            httpGet:
+              path: /actuator/health
+              port: service-port
+            periodSeconds: {{ .Values.startupProbe.periodSeconds }}
+            failureThreshold: {{ .Values.startupProbe.failureThreshold }}
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: service-port
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: service-port
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+            failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+          resources: {{ toYaml .Values.resources | nindent 12 }}

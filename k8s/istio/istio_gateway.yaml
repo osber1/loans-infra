@@ -107,7 +107,7 @@
 #  http:
 #    - route:
 #        - destination:
-#            host: risk-checker.loans.svc.cluster.local
+#            host: risk.loans.svc.cluster.local
 #
 #---
 #

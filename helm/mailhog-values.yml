@@ -1,0 +1,7 @@
+ingress:
+  enabled: true
+  hosts:
+    - host: mailhog.osber.io
+      paths:
+        - path: /
+          pathType: Prefix

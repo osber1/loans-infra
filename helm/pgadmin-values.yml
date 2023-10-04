@@ -1,0 +1,13 @@
+nameOverride: pgadmin
+
+env:
+  email: admin@admin.com
+  password: admin
+
+ingress:
+  enabled: true
+  hosts:
+    - host: pgadmin.osber.io
+      paths:
+        - path: /
+          pathType: ImplementationSpecific

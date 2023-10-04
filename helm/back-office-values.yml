@@ -1,0 +1,14 @@
+nameOverride: back-office
+
+image:
+  tag: 1.0-SNAPSHOT
+
+service:
+  port: 8080
+
+ingress:
+  enabled: true
+  hostname: back-office.osber.io
+
+env:
+  REDIS_HOST: redis-master.loans.svc.cluster.local
