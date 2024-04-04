@@ -6522,7 +6522,7 @@ spec:
         component: core
     spec:
       containers:
-        - image: grafana/grafana-oss:10.0.3
+        - image: grafana/grafana-oss:10.1.9
           name: grafana
           ports:
             - containerPort: 3000
