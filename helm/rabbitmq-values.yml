@@ -30,9 +30,29 @@ extraSecrets:
             "read": ".*"
           }
         ],
+        "policies": [
+          {
+            "vhost": "/",
+            "name": "notification-dlx",
+            "pattern": "^notification\\.queue$",
+            "apply-to": "queues",
+            "definition": {
+              "dead-letter-exchange": "",
+              "dead-letter-routing-key": "notification.dlq"
+            },
+            "priority": 0
+          }
+        ],
         "queues": [
           {
             "name": "notification.queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+          },
+          {
+            "name": "notification.dlq",
             "vhost": "/",
             "durable": true,
             "auto_delete": false,
