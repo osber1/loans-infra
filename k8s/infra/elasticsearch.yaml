@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: elasticsearch
-          image: elasticsearch:8.13.0
+          image: elasticsearch:9.5.3
           resources:
             limits:
               cpu: 1000m
