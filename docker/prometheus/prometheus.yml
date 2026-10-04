@@ -15,3 +15,15 @@ scrape_configs:
       - targets: [ 'localhost:8080' ]
         labels:
           application: 'Back-office Application'
+  - job_name: 'risk_checker'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'risk-checker:8081' ]
+        labels:
+          application: 'Risk Checker Application'
+  - job_name: 'notification_service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'notification-service:8082' ]
+        labels:
+          application: 'Notification Service Application'
