@@ -9,3 +9,6 @@ service:
 ingress:
   enabled: true
   hostname: notifications.osber.io
+
+env:
+  EMAIL_ACTIVATIONLINK: http://back-office.osber.io/api/v1/clients/%s/activation?token=%s
